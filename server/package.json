@@ -1,0 +1,19 @@
+{
+  "name": "my-app-server",
+  "version": "1.0.0",
+  "description": "Server for distributing React applications",
+  "main": "app.js",
+  "bin": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "pkg": {
+    "assets": [
+      "build/**/*"
+    ],
+    "output": "dist"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
