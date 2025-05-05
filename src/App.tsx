@@ -1,9 +1,9 @@
-import HorseSearchPage from './pages/HorseSearchPage';
 import './App.css';
+import { Home } from './pages/Home';
 
 function App() {
   return (
-    <HorseSearchPage></HorseSearchPage>
+    <Home></Home>
   );
 }
 
