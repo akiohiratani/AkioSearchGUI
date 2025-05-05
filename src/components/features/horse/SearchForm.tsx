@@ -87,6 +87,7 @@ export default function SearchForm({ onSearch }: Props) {
           open={alertDialogStatus.open} 
           message={alertDialogStatus.message} 
           onClose={()=> SetAlertDialogStatus({"open": false, "message": ""})}/>
+          
     </form>
   );
 }
