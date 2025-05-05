@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Button } from '../common/Button';
-import { AlertDialog } from '../horse/AlertDialog';
+import { AlertDialog, AlertDialogStatus } from '../common/AlertDialog';
 
 type ButtonAction = 'selectedRaceFromTopics' | 'selectedRaceDirect';
 
 // メインのレース選択画面コンポーネント
 export const RaceSelectionScreen = () => {
-    const [alertDialogStatus, SetAlertDialogStatus] = useState({open:false, message:""});
+    const [alertDialogStatus, SetAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""});
 
     const handleButtonClick = (action: ButtonAction) =>{
     switch(action){

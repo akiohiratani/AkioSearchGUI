@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RaceListDialog } from './RaceListDialog';
 import { SearchType } from './type/SearchType';
 import { FavoriteHorseService } from '../../../infrastructure/holder/FavoriteHorseService';
-import { AlertDialog } from './AlertDialog';
+import { AlertDialog, AlertDialogStatus } from '../common/AlertDialog';
 
 type Props = {
   onSearch: (keyword: SearchType) => void;
@@ -11,7 +11,7 @@ type Props = {
 export default function SearchForm({ onSearch }: Props) {
   const [horseName, setHorseName] = useState('');
   const [isRaceListDialogOpen, setIsRaceListDialog] = useState(false)
-  const [isAlertDialog, SetIsAlertDialog] = useState({open:false, message:""})
+  const [alertDialogStatus, SetAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""})
 
   const handleSetIsRaceListDialog = (value:boolean) =>{
     setIsRaceListDialog(value);
@@ -42,7 +42,7 @@ export default function SearchForm({ onSearch }: Props) {
         "value":""
       });
     }else{
-      SetIsAlertDialog({"open":true, "message":"登録されていません。"})
+      SetAlertDialogStatus({"open":true, "message":"登録されていません。"})
     }
   };
 
@@ -84,9 +84,9 @@ export default function SearchForm({ onSearch }: Props) {
         onSearch={onSearch}
         handleDialog={handleSetIsRaceListDialog}></RaceListDialog>
         <AlertDialog
-          open={isAlertDialog.open} 
-          message={isAlertDialog.message} 
-          onClose={()=> SetIsAlertDialog({"open": false, "message": ""})}/>
+          open={alertDialogStatus.open} 
+          message={alertDialogStatus.message} 
+          onClose={()=> SetAlertDialogStatus({"open": false, "message": ""})}/>
     </form>
   );
 }

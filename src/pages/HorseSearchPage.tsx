@@ -7,7 +7,7 @@ import SearchForm from '../components/features/horse/SearchForm';
 import HorseList from '../components/features/horse/HorseList';
 import { SearchDialog } from '../components/features/horse/SearchDialog';
 import { SearchType } from '../components/features/horse/type/SearchType';
-import { AlertDialog } from '../components/features/horse/AlertDialog';
+import { AlertDialog, AlertDialogStatus } from '../components/features/common/AlertDialog';
 import { FavoriteHorseService } from '../infrastructure/holder/FavoriteHorseService';
 import { CsvExportDialog } from '../components/features/horse/CsvExportDialog';
 import { BulkOperationButtons } from '../components/features/horse/BulkOperationButtons';
@@ -15,7 +15,7 @@ import { BulkOperationButtons } from '../components/features/horse/BulkOperation
 export default function HorseSearchPage() {
   const [horses, setHorses] = useState<Horse[]>([]);
   const [loading, setLoading] = useState({open:false, message:""});
-  const [isAlertDialog, SetIsAlertDialog] = useState({open:false, message:""})
+  const [alertDialogStatus, SetIsAlertDialog] = useState<AlertDialogStatus>({open:false, message:""})
   const [isCsvExportDialog, setCsvExportDialog] = useState(false)
 
   const handleSearch = async (keyword: SearchType) => {
@@ -118,8 +118,8 @@ export default function HorseSearchPage() {
       <SearchForm onSearch={handleSearch} />
       <SearchDialog isOpen={loading.open} message={loading.message}/>
       <AlertDialog
-        open={isAlertDialog.open} 
-        message={isAlertDialog.message} 
+        open={alertDialogStatus.open} 
+        message={alertDialogStatus.message} 
         onClose={()=> SetIsAlertDialog({"open": false, "message": ""})}/>
       <HorseList horses={horses} />
       <BulkOperationButtons horses={horses} onUpdate={OnFavariteHorseUpdate}/>

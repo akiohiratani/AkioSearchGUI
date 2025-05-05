@@ -26,3 +26,8 @@ export const AlertDialog = ({ open, onClose, message }: Props) => {
     </>
   );
 };
+
+export interface AlertDialogStatus{
+  "open":boolean;
+  "message":string;
+}
