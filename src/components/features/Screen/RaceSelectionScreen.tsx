@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { Button } from '../common/Button';
+import { AlertDialog } from '../horse/AlertDialog';
 
 type ButtonAction = 'selectedRaceFromTopics' | 'selectedRaceDirect';
 
 // メインのレース選択画面コンポーネント
 export const RaceSelectionScreen = () => {
+    const [alertDialogStatus, SetAlertDialogStatus] = useState({open:false, message:""});
+
     const handleButtonClick = (action: ButtonAction) =>{
     switch(action){
         case "selectedRaceFromTopics":
@@ -12,6 +16,10 @@ export const RaceSelectionScreen = () => {
         case "selectedRaceDirect":
         default:
             console.log(action);
+            SetAlertDialogStatus({
+                    "open" : true,
+                    "message": "未対応。今後実装予定。"
+                })
             break;
     }
     }
@@ -19,7 +27,7 @@ export const RaceSelectionScreen = () => {
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
         <div className="w-full max-w-md bg-white rounded-xl shadow-sm p-8 border border-gray-100">
           <h1 className="text-2xl font-bold text-gray-800 mb-8 text-center">
-            どのレースデータを取集しますか??
+            どのレースから取集しますか??
           </h1>
           
           <div className="space-y-4">
@@ -39,6 +47,10 @@ export const RaceSelectionScreen = () => {
             </Button>
           </div>
         </div>
+        <AlertDialog
+            open={alertDialogStatus.open} 
+            message={alertDialogStatus.message} 
+            onClose={()=> SetAlertDialogStatus({"open": false, "message": ""})}/>
       </div>
     );
   };
