@@ -20,7 +20,7 @@ export const Home = () => {
             <ExportScreen
                 keyword={currentSelectedSearchType}
                 isVisible={currentScreen.export}
-                onClose={() => {setCurrentScreen(prev => ({...prev, "export":false}))}}/>
+                onClose={() => {setCurrentScreen({"raceSelection":true, "export":false})}}/>
         </div>
     );
 }
