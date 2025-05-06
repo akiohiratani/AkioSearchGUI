@@ -5,7 +5,8 @@ import { SearchType } from "../common/type/SearchType";
 import { exportDataset } from "../../../infrastructure/api/ExportApiClient";
 import { AlertDialog } from "../common/AlertDialog";
 import { AlertDialogStatus } from "../common/AlertDialog";
-import { Button } from "../common/Button";
+import { ExportConfirmation } from "../export/ExportConfirmation";
+import { ExportSuccess } from "../export/ExportSuccess";
 
 type Props = {
     isVisible: boolean;
@@ -14,14 +15,20 @@ type Props = {
 };
 
 export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
+    const [currentScreen, setCurrentScreen] = useState({"confirmationScreen":true, "successScreen":false});
     const [loading, setLoading] = useState({open:false, message:""});
-    const [alertDialogStatus, SetAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""});
-    // 分析年数のデフォルト値を5に設定
-    const [years, setYears] = useState<number>(5);
+    const [alertDialogStatus, setAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""});
+    const [outputPath, setOutputPath] = useState("");
     const race = keyword.value as Race;
 
+    // 表示を初期化して閉じる
+    const handleClose = () =>{
+        setCurrentScreen({"confirmationScreen":true, "successScreen":false});
+        onClose();
+    }
+
     // API連携
-    const handleSearch = async () => {
+    const handleSearch = async (years: number) => {
         // 検索をダイアログの表示する
         setLoading({open:true, message:"データセット出力中・・・"});
         let isSuccess = true;
@@ -31,10 +38,11 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
                 // 検索ワードから馬を抽出
                 if(keyword.value == null) return;
                 
-                await exportDataset(race.id, years);
+                const outputPath = await exportDataset(race.id, years);
+                setOutputPath(outputPath);
                 break;
             default:{
-                console.log("未知の検索")
+                console.log("未知の検索");
                 break;
             }
             }
@@ -47,73 +55,40 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
     
             // 結果に応じて警告ダイアログを表示する
             if(isSuccess){
-                SetAlertDialogStatus({"open": true, "message": "正常に終了しました。"})
+                setCurrentScreen({"confirmationScreen" : false, "successScreen": true});
             }else{
-                SetAlertDialogStatus({"open": true, "message": "実行に失敗しました。"})
+                setAlertDialogStatus({"open": true, "message": "実行に失敗しました。"});
             }
         }
     };
 
-    const hanleOkClick = () =>{
-        handleSearch();
+    const hanleOnExport = (years: number) =>{
+        handleSearch(years);
     }
 
     if(!isVisible) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-                {/* ヘッダー部分 */}
-                <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">出力確認</h2>
-                <p className="mt-2 text-sm text-gray-600">以下の内容でデータセットの出力を行います。</p>
-                </div>
-                
-                {/* レース名表示部分 */}
-                <div className="mb-6">
-                <div className="flex items-center mb-2">
-                    <span className="font-medium text-gray-700">選択レース:</span>
-                    <span className="ml-2 text-gray-900">{race.name}</span>
-                </div>
-                </div>
-                
-                {/* 分析年数選択部分 */}
-                <div className="mb-8">
-                <label htmlFor="years" className="block mb-2 text-sm font-medium text-gray-900">
-                    出力年数
-                </label>
-                <select
-                    id="years"
-                    value={years}
-                    onChange={(e) => setYears(parseInt(e.target.value, 10))}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                >
-                    {Array.from({ length: 15 }, (_, i) => i + 1).map((year) => (
-                    <option key={year} value={year}>
-                        {year}年
-                    </option>
-                    ))}
-                </select>
-                <p className="mt-2 text-xs text-gray-500">※年数が多いほど処理に時間がかかります。</p>
-                </div>
-                
-                {/* ボタン部分 */}
-                <div className="flex justify-end space-x-4">
-                <Button variant="secondary" onClick={onClose}>
-                    戻る
-                </Button>
-                <Button variant="primary" onClick={hanleOkClick}>
-                    実行
-                </Button>
-                </div>
-            </div>
+        <div>
+            <ExportConfirmation
+                isOpen={currentScreen.confirmationScreen}
+                onClose={handleClose}
+                onExport={hanleOnExport}
+                raceName={race.name}
+            />
+            <ExportSuccess
+                isOpen={currentScreen.successScreen}
+                onClose={handleClose}
+                outputPath={outputPath}
+            />
+
             <SearchDialog 
                 isOpen={loading.open} 
                 message={loading.message}/>
             <AlertDialog
                 open={alertDialogStatus.open} 
-                message={alertDialogStatus.message} 
-                onClose={()=> SetAlertDialogStatus({"open": false, "message": ""})}/>
+                message={alertDialogStatus.message}
+                onClose={()=> setAlertDialogStatus({"open": false, "message": ""})}/>
         </div>
     );
 }
