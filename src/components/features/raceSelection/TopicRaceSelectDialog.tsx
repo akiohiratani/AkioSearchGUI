@@ -37,10 +37,10 @@ export const TopicRaceSelectDialog = ({ isOpen, onClose, onSearch, handleDialog 
 
   if (!isOpen) return null;
 
-  const handleRaceClick = (raceId: string) => {
+  const handleRaceClick = (race: Race) => {
     onSearch({
       "type":"topicRace",
-      "value":raceId
+      "value":race
     });
 
     handleDialog(false);
@@ -82,7 +82,7 @@ export const TopicRaceSelectDialog = ({ isOpen, onClose, onSearch, handleDialog 
                 <li key={race.id}>
                   <button
                     type="button"
-                    onClick={() => handleRaceClick(race.id)}
+                    onClick={() => handleRaceClick(race)}
                     className="w-full text-left rounded-xl bg-blue-50/60 hover:bg-blue-100 transition-colors duration-200 shadow-sm px-5 py-4 flex flex-col gap-1 group border border-blue-100"
                   >
                     <span className="text-lg font-bold text-blue-700 group-hover:text-blue-900 flex items-center">

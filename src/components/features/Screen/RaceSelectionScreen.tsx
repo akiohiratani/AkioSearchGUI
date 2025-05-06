@@ -3,31 +3,40 @@ import { Button } from '../common/Button';
 import { AlertDialog, AlertDialogStatus } from '../common/AlertDialog';
 import { TopicRaceSelectDialog } from '../raceSelection/TopicRaceSelectDialog';
 import { SearchType } from '../common/type/SearchType';
-import { exportDataset } from '../../../infrastructure/api/ExportApiClient';
-import { SearchDialog } from '../horse/SearchDialog';
 
 type ButtonAction = 'selectedRaceFromTopics' | 'selectedRaceDirect';
 
+type Props = {
+  isVisible: boolean;
+  onClose: () => void;
+  onExport:(keyword: SearchType) => void
+};
+
 // メインのレース選択画面コンポーネント
-export const RaceSelectionScreen = () => {
+export const RaceSelectionScreen = ({isVisible, onExport, onClose}: Props) => {
     const [alertDialogStatus, SetAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""});
-    const [loading, setLoading] = useState({open:false, message:""});
     const [TopicRaceSelectDialogOpen, setTopicRaceSelectDialogOpen] = useState(false);
     
     // ボタンが押下されときの挙動
     const handleButtonClick = (action: ButtonAction) =>{
         switch(action){
-            case "selectedRaceFromTopics":
-                setTopicRaceSelectDialogOpen(true)
-                break;
-            case "selectedRaceDirect":
-            default:
-                SetAlertDialogStatus({
-                        "open" : true,
-                        "message": "未対応。今後実装予定。"
-                    })
-                break;
-            }
+          case "selectedRaceFromTopics":
+            setTopicRaceSelectDialogOpen(true)
+            break;
+          case "selectedRaceDirect":
+          default:
+            SetAlertDialogStatus({
+                    "open" : true,
+                    "message": "未対応。今後実装予定。"
+                })
+            break;
+        }
+    }
+
+    // レース選択が完了したときに挙動
+    const handleSearch = (keyword: SearchType) =>{
+      onExport(keyword);
+      onClose();
     }
 
     // 警告ダイアログ表示
@@ -35,37 +44,7 @@ export const RaceSelectionScreen = () => {
         setTopicRaceSelectDialogOpen(value);
     }
 
-    // API連携
-    const handleSearch = async (keyword: SearchType) => {
-        // 検索をダイアログの表示する
-        setLoading({open:true, message:"データセット出力中・・・"});
-        let isSuccess = true;
-        try {
-          switch(keyword.type){
-            case "topicRace":
-                // 検索ワードから馬を抽出
-                if(keyword.value == null || keyword.value === "") return;
-                await exportDataset(keyword.value);
-                break;
-            default:{
-                console.log("未知の検索")
-                break;
-            }
-          }
-        } catch (error) {
-          console.error('検索エラー:', error);
-          isSuccess = false;
-        } finally {
-          // 進捗ダイアログを閉じる
-          setLoading({open:false,message:""});
-    
-          // 結果に応じて警告ダイアログを表示する
-          if(!isSuccess){
-            SetAlertDialogStatus({"open": true, "message": "実行に失敗しました。"})
-          }
-        }
-      };
-
+    if(!isVisible) return null;
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
         <div className="w-full max-w-md bg-white rounded-xl shadow-sm p-8 border border-gray-100">
@@ -99,7 +78,6 @@ export const RaceSelectionScreen = () => {
             onClose={() => setTopicRaceSelectDialogOpen(false)}
             onSearch={handleSearch}
             handleDialog={handleSetIsRaceListDialog}/>
-        <SearchDialog isOpen={loading.open} message={loading.message}/>
       </div>
     );
   };

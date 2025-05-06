@@ -7,7 +7,7 @@ import { FavoriteHorseService } from '../../../infrastructure/holder/FavoriteHor
 type Props = {
     horses: Horse[];
     onUpdate: () => void;
-  };
+};
 
 export const BulkOperationButtons = ({ horses, onUpdate }: Props) => {
     const favoriteService = FavoriteHorseService.getInstance();
