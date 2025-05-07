@@ -1,6 +1,6 @@
 import { useState } from "react";
 import icon from "../assets/icon.jpg";
-import { ProgressTracker } from "../components/features/Screen/ProgressTracker";
+import { Header } from "../components/features/Screen/Header";
 import { RaceSelectionScreen } from "../components/features/Screen/RaceSelectionScreen";
 import { ExportScreen } from "../components/features/Screen/ExportScreen";
 import { SearchType } from "../components/features/common/type/SearchType";
@@ -33,7 +33,6 @@ export const Home = () => {
                     top: 0,
                     left: 0,
                     width: '100%',
-                    zIndex: 1000,
                     background: 'white',
                     borderBottom: '1px solid #eee',
                     display: 'flex',
@@ -48,34 +47,34 @@ export const Home = () => {
                     alignItems: 'center',
                     minWidth: 0,
                 }}>
-                    <img
-                    src={icon}
-                    alt="Researcherアイコン"
-                    style={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: 8,
-                        marginRight: 16,
-                        objectFit: 'cover',
-                        background: '#f4f4f4',
-                        flexShrink: 0,
-                    }}
-                    />
-                    <span style={{
-                    fontWeight: 700,
-                    fontSize: 24,
-                    color: '#222',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    }}>
+                <img
+                src={icon}
+                alt="Researcherアイコン"
+                style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 8,
+                    marginRight: 16,
+                    objectFit: 'cover',
+                    background: '#f4f4f4',
+                    flexShrink: 0,
+                }}
+                />
+                <span style={{
+                fontWeight: 700,
+                fontSize: 24,
+                color: '#222',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                }}>
                     Researcher
-                    </span>
+                </span>
                 </div>
                 <div style={{ flex: 1, minWidth: 0, marginLeft: 32 }}>
-                    <ProgressTracker currentStep={currentStep} />
+                    <Header currentStep={currentStep} />
                 </div>
-                </div>
+            </div>
             <RaceSelectionScreen 
                 onExport={handleExport}
                 isVisible={currentScreen.raceSelection}

@@ -1,56 +1,45 @@
-import { useState } from 'react';
+type type = {
+  currentStep: 'race-selection' | 'dataset-output';
+}
 
-export const Header = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
+export const Header = ({ currentStep }: type) => {
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* ロゴ部分 */}
-          <div className="flex-shrink-0 flex items-center">
-            <h1 className="text-2xl font-bold text-gray-800">AkioSearch</h1>
-          </div>
-
-          {/* デスクトップナビゲーション */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-8">
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                  ホーム
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                  レース検索
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                  データ分析
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      {/* モバイルメニュー */}
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
-              ホーム
-            </a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
-              レース検索
-            </a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
-              データ分析
-            </a>
-          </div>
-        </div>
-      )}
-    </header>
+    <div className="w-full max-w-4xl mx-auto py-6">
+      <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500">
+        <li className={`flex md:w-full items-center ${
+          currentStep === 'race-selection' ? 'text-blue-600' : currentStep === 'dataset-output' ? 'text-green-600' : ''
+        } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10`}>
+          <span className={`flex items-center justify-center w-8 h-8 ${
+            currentStep === 'race-selection' 
+              ? 'bg-blue-100 text-blue-600' 
+              : currentStep === 'dataset-output' 
+                ? 'bg-green-100 text-green-600' 
+                : 'bg-gray-100'
+          } rounded-full lg:h-10 lg:w-10 shrink-0`}>
+            {currentStep === 'dataset-output' ? (
+              <svg className="w-3.5 h-3.5 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+              </svg>
+            ) : (
+              "1"
+            )}
+          </span>
+          <span className="ml-2">レース選択</span>
+        </li>
+        
+        <li className={`flex items-center ${
+          currentStep === 'dataset-output' ? 'text-blue-600' : ''
+        }`}>
+          <span className={`flex items-center justify-center w-8 h-8 ${
+            currentStep === 'dataset-output' 
+              ? 'bg-blue-100 text-blue-600' 
+              : 'bg-gray-100'
+          } rounded-full lg:h-10 lg:w-10 shrink-0`}>
+            {"2"}
+          </span>
+          <span className="ml-2">データセット出力</span>
+        </li>
+      </ol>
+    </div>
   );
 };
