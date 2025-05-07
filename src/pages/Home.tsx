@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Header } from "../components/features/Screen/Header";
+import icon from "../assets/icon.jpg";
 import { ProgressTracker } from "../components/features/Screen/ProgressTracker";
 import { RaceSelectionScreen } from "../components/features/Screen/RaceSelectionScreen";
 import { ExportScreen } from "../components/features/Screen/ExportScreen";
@@ -26,8 +26,56 @@ export const Home = () => {
 
     return (
         <div>
-            {/* <Header/> */}
-            <ProgressTracker currentStep={currentStep} />
+            {/* Header */}
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    zIndex: 1000,
+                    background: 'white',
+                    borderBottom: '1px solid #eee',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 24px',
+                    height: 64,
+                    boxSizing: 'border-box',
+                }}
+                >
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    minWidth: 0,
+                }}>
+                    <img
+                    src={icon}
+                    alt="Researcherアイコン"
+                    style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 8,
+                        marginRight: 16,
+                        objectFit: 'cover',
+                        background: '#f4f4f4',
+                        flexShrink: 0,
+                    }}
+                    />
+                    <span style={{
+                    fontWeight: 700,
+                    fontSize: 24,
+                    color: '#222',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    }}>
+                    Researcher
+                    </span>
+                </div>
+                <div style={{ flex: 1, minWidth: 0, marginLeft: 32 }}>
+                    <ProgressTracker currentStep={currentStep} />
+                </div>
+                </div>
             <RaceSelectionScreen 
                 onExport={handleExport}
                 isVisible={currentScreen.raceSelection}
