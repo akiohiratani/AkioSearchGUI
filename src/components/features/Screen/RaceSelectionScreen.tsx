@@ -27,7 +27,7 @@ export const RaceSelectionScreen = ({isVisible, onExport, onClose}: Props) => {
           default:
             SetAlertDialogStatus({
                     "open" : true,
-                    "message": "未対応。今後実装予定。"
+                    "message": "現バージョンでは未対応です。"
                 })
             break;
         }
@@ -65,7 +65,7 @@ export const RaceSelectionScreen = ({isVisible, onExport, onClose}: Props) => {
               aria-label="レースを直接指定"
               onClick={() => {handleButtonClick("selectedRaceDirect")}}
             >
-              直接指定
+              カスタマイズ指定
             </Button>
           </div>
         </div>
