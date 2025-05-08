@@ -23,7 +23,7 @@ export const exportDataset= async (race_id:string, years:number): Promise<string
   return data;
 }
 
-export const getProcessingTime= async (race_id:string, executions:number): Promise<string> => {
+export const getProcessingTime= async (race_id:string, executions:number): Promise<number> => {
 
   // 選択したレースを出力
   const response = await fetch(`${API_BASE_URL}/races/calculation`, {
@@ -40,7 +40,6 @@ export const getProcessingTime= async (race_id:string, executions:number): Promi
   }
 
   const { data } = await response.json() as ExportResultData;
-  console.log(data);
 
-  return data;
+  return parseInt(data);
 }

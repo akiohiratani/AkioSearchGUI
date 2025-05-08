@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Race } from "../../../domain/models/Race";
-import { SearchDialog } from "../horse/SearchDialog";
 import { SearchType } from "../common/type/SearchType";
 import { exportDataset, getProcessingTime } from "../../../infrastructure/api/ExportApiClient";
 import { AlertDialog } from "../common/AlertDialog";
 import { AlertDialogStatus } from "../common/AlertDialog";
 import { ExportConfirmation } from "../export/ExportConfirmation";
 import { ExportSuccess } from "../export/ExportSuccess";
+import { ProgressDialog } from "../common/ProgressDialog";
 
 type Props = {
     isVisible: boolean;
@@ -16,7 +16,7 @@ type Props = {
 
 export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
     const [currentScreen, setCurrentScreen] = useState({"confirmationScreen":true, "successScreen":false});
-    const [loading, setLoading] = useState({open:false, message:""});
+    const [loading, setLoading] = useState({open:false, message:"", duration:0.00});
     const [alertDialogStatus, setAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""});
     const [outputPath, setOutputPath] = useState("");
     const race = keyword.value as Race;
@@ -31,7 +31,8 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
     const handleSearch = async (years: number) => {
 
         // 検索をダイアログの表示する
-        setLoading({open:true, message:"データセット出力中・・・"});
+        setLoading({open:true, message:"",duration:0});
+        
         let isSuccess = true;
         try {
             switch(keyword.type){
@@ -40,9 +41,11 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
                 if(keyword.value == null) return;
 
                 // 予想時間を取得
-                await getProcessingTime(race.id, years);
+                setLoading({open:true, message:"セットアップ中・・・", duration:50});
+                const processingTime = await getProcessingTime(race.id, years);
 
                 // 出力実行
+                setLoading({open:true, message:"データセット出力中・・・", duration:processingTime});
                 const outputPath = await exportDataset(race.id, years);
                 setOutputPath(outputPath);
                 break;
@@ -56,7 +59,7 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
             isSuccess = false;
         } finally {
             // 進捗ダイアログを閉じる
-            setLoading({open:false,message:""});
+            setLoading({open:false,message:"", duration:0});
     
             // 結果に応じて警告ダイアログを表示する
             if(isSuccess){
@@ -86,10 +89,10 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
                 onClose={handleClose}
                 outputPath={outputPath}
             />
-
-            <SearchDialog 
-                isOpen={loading.open} 
-                message={loading.message}/>
+            <ProgressDialog
+                isOpen={loading.open}
+                message={loading.message}
+                duration={loading.duration}/>
             <AlertDialog
                 open={alertDialogStatus.open} 
                 message={alertDialogStatus.message}
