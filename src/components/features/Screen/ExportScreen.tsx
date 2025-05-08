@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Race } from "../../../domain/models/Race";
 import { SearchDialog } from "../horse/SearchDialog";
 import { SearchType } from "../common/type/SearchType";
-import { exportDataset } from "../../../infrastructure/api/ExportApiClient";
+import { exportDataset, getProcessingTime } from "../../../infrastructure/api/ExportApiClient";
 import { AlertDialog } from "../common/AlertDialog";
 import { AlertDialogStatus } from "../common/AlertDialog";
 import { ExportConfirmation } from "../export/ExportConfirmation";
@@ -29,6 +29,7 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
 
     // API連携
     const handleSearch = async (years: number) => {
+
         // 検索をダイアログの表示する
         setLoading({open:true, message:"データセット出力中・・・"});
         let isSuccess = true;
@@ -37,7 +38,11 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
             case "topicRace":
                 // 検索ワードから馬を抽出
                 if(keyword.value == null) return;
-                
+
+                // 予想時間を取得
+                await getProcessingTime(race.id, years);
+
+                // 出力実行
                 const outputPath = await exportDataset(race.id, years);
                 setOutputPath(outputPath);
                 break;

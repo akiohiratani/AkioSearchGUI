@@ -22,3 +22,25 @@ export const exportDataset= async (race_id:string, years:number): Promise<string
   const { data } = await response.json() as ExportResultData;
   return data;
 }
+
+export const getProcessingTime= async (race_id:string, executions:number): Promise<string> => {
+
+  // 選択したレースを出力
+  const response = await fetch(`${API_BASE_URL}/races/calculation`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: race_id ,executions:executions})
+  })
+  
+  if (!response.ok) {
+    const { error } = await response.json() as ErrorData;
+    throw new Error(`status_code:${error.status_code}\n message=${error.message}`);
+  }
+
+  const { data } = await response.json() as ExportResultData;
+  console.log(data);
+
+  return data;
+}
