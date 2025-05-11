@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JRAレース結果収集アプリ 取扱説明書</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.1em;
+        }
+        h2 {
+            color: #3498db;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin: 35px 0 20px 0;
+            font-size: 1.4em;
+        }
+        h3 {
+            color: #2c3e50;
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        .card-group {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: nowrap;
+        }
+        .card {
+            flex: 1;
+            min-width: 0;
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .card.orange {
+            background: #fff3e0;
+        }
+        .bg-light {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .bg-warning {
+            background: #fff8e1;
+            padding: 25px;
+            border-radius: 6px;
+            border: 1px solid #ffe082;
+            margin: 40px 0;
+        }
+        ol, ul {
+            margin: 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .prompt-box {
+            background: #f1f8e9;
+            border-left: 4px solid #43a047;
+            padding: 15px 20px;
+            margin: 18px 0;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Menlo', monospace;
+            color: #2e7d32;
+            font-size: 1em;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+        .footer p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        @media (max-width: 900px) {
+            .card-group { flex-direction: column; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            .card-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏇 JRAレース結果収集アプリ 取扱説明書</h1>
+
+    <section>
+        <h2>アプリの特徴</h2>
+        <ul>
+            <li>指定したレースの過去10年分のデータを自動収集</li>
+            <li>馬の基本情報（血統、年齢、性別など）も同時に取得</li>
+            <li>収集したデータはCSV形式で出力され、様々な分析ツールで利用可能</li>
+            <li>直感的な操作で、競馬データの専門知識がなくても簡単に使用可能</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>インストールと起動</h2>
+        <div class="bg-light">
+            <ol>
+                <li>ダウンロードしたファイルを解凍してください。</li>
+                <li><b>Start.exe</b>ファイルをダブルクリックして起動してください。<br>
+                    <span style="color:#888;">※Google Chromeがインストールされていることを推奨します。</span><br>
+                    <span style="color:#888;">※セキュリティ警告が表示された場合は「アクセスを許可する」をクリックしてください。</span>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h2>データ収集手順</h2>
+        <div class="bg-light">
+            <ol>
+                <li>アプリが起動したら「<b>レースから選択</b>」ボタンをクリックします。</li>
+                <li>表示される今週の主要レース一覧から、データを収集したいレースを選択します。</li>
+                <li>取得したい<b>年数</b>（1年〜10年）を選択します。<br>
+                    <span style="color:#888;">※選択した年数分の最新データから順に取得します。</span>
+                </li>
+                <li><b>OK</b>ボタンをクリックすると、データ収集が開始されます。</li>
+                <li>進捗ダイアログが表示され、データ収集状況を確認できます。<br>
+                    <span style="color:#888;">※データ収集中はPCの電源を切ったり、スリープ状態にしないでください。画面ロックは問題ありません。</span>
+                </li>
+                <li>処理が完了すると進捗ダイアログが閉じて、成功画面が表示されます。<br>
+                    ダイアログには、出力したCSVファイルの保存場所が記載されています。
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h2>CSVファイルの使い方</h2>
+        <div class="card-group">
+            <div class="card">
+                <h3>🤖 生成AIによる競馬予想</h3>
+                <p>
+                    収集したデータを生成AI（ChatGPT、Claude等）に提供することで、高精度な予想が可能になります。
+                </p>
+                <ul>
+                    <li><b>データなしの生成AI</b>：一般的な知識のみで予想するため、的中率は低く、穴馬の予測はほぼ不可能です。</li>
+                    <li><b>10年分のデータを学習した生成AI</b>：複雑なパターンを認識し、的中率が大幅に向上します（一般予想家の25-30%に対し、35-40%以上も可能）。</li>
+                </ul>
+                <p>
+                    <b>具体的な使い方：</b><br>
+                    収集したCSVファイルをAIにアップロードし、以下のようなプロンプトを入力してください。
+                </p>
+                <div class="prompt-box">
+                    以下のCSVファイルには過去10年分の○○レースのデータが含まれています。<br>
+                    このデータを分析して、今週の○○レースの予想をしてください。<br>
+                    特に以下の点に注目してください：<br>
+                    1. 血統と成績の相関関係<br>
+                    2. 騎手とコースの相性<br>
+                    3. 馬場状態による各馬の成績変化<br>
+                    4. 過去の類似レース展開パターン
+                </div>
+                <p>
+                    <b>データがあることでできること：</b><br>
+                    ・複雑なパターンを認識して予想<br>
+                    ・的中率が大幅に向上<br>
+                    ・穴馬の発見も可能<br>
+                    ・大雨の中京競馬場での長距離レースなど特殊なケースにも対応<br>
+                    ・超スローペースから上がり勝負になったケースの分析も可能<br>
+                    ・人気馬が揃って敗れた波乱のレースも予測しやすくなります<br>
+                </p>
+                <p>
+                    <b>データがない場合：</b><br>
+                    AIはこうしたパターンを学習できず、「なんとなくの予想」しかできません。
+                </p>
+            </div>
+
+            <div class="card orange">
+                <h3>📊 Excelで傾向を可視化する</h3>
+                <p>
+                    Excelで傾向を可視化する
+収集したCSVファイルをExcelに取り込むことで、NHKマイルカップに出走した馬の過去データを多角的に分析できます。特に、以下の3つの分析・可視化手法が効果的です。
+
+オッズ・人気順と着順の関係をヒートマップや散布図で可視化
+オッズや人気順ごとに着順の分布をExcelのピボットテーブルや条件付き書式でヒートマップ化することで、「人気馬がどの程度信頼できるか」「穴馬が好走したパターン」などを直感的に把握できます。また、人気順と着順の散布図を作成し、トレンドラインを追加することで、予測精度や傾向を分析できます。
+
+騎手やゲート番号ごとの成績をグラフ化
+騎手別・ゲート番号別の成績（勝率・連対率・複勝率など）をピボットテーブルで集計し、棒グラフやレーダーチャートで可視化することで、「有利な枠順」や「好成績の騎手」を一目で確認できます。これにより、レース展開や戦術の予測に役立ちます。
+
+血統や前走成績と本番成績の関係を分析
+父馬や前走コース・着順などの情報をまとめ、勝ち馬や好走馬の共通点を抽出します。Excelのフィルターやクロス集計を使って「どの血統がNHKマイルカップに強いか」「前走でどのような成績を収めた馬が本番で好走するか」などを可視化できます。これにより、馬券検討の精度がさらに高まります。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-warning">
+        <h2 style="color: #d84315;">⚠️ 注意事項</h2>
+        <ul>
+            <li>本アプリは個人での分析・予想目的でのみご利用ください。</li>
+            <li>収集したデータの再配布や商用利用は禁止します。</li>
+            <li>JRAの公式サイトに過度な負荷をかけないよう、短時間での連続使用はお控えください。</li>
+            <li>本アプリの不正利用、改造、リバースエンジニアリングは禁止します。</li>
+            <li>本アプリの使用による予想結果の的中を保証するものではありません。</li>
+            <li>競馬は公営ギャンブルです。過度な投資は控え、計画的にお楽しみください。</li>
+            <li>本アプリの利用によって生じたいかなる損害についても、開発者は責任を負いません。</li>
+            <li>悪用・違法利用が判明した場合は利用停止等の措置を取る場合があります。</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>サポート</h2>
+        <p>
+            ご不明点やお問い合わせは、以下のメールアドレスまでご連絡ください。<br>
+            <b>support@example.com</b>（営業時間：平日10:00〜18:00）
+        </p>
+    </section>
+
+    <footer class="footer">
+        <p>
+            © 2024 JRA Data Collector<br>
+            本アプリを使って、データに基づいた賢い競馬予想をお楽しみください！
+        </p>
+    </footer>
+</div>
+</body>
+</html>

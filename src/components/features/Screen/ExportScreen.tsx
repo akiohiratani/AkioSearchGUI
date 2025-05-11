@@ -41,12 +41,12 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
                 if(keyword.value == null) return;
 
                 // 予想時間を取得
-                setLoading({open:true, message:"セットアップ中・・・", duration:50});
+                setLoading({open:true, message:"セットアップ中・・・(1/2)", duration:38});
                 const processingTime = await getProcessingTime(race.id, years);
 
                 // 出力実行
-                setLoading({open:true, message:"データセット出力中・・・", duration:processingTime});
-                const outputPath = await exportDataset(race.id, years);
+                setLoading({open:true, message:"データセット出力中・・・(2/2)", duration:processingTime});
+                const outputPath = await exportDataset(race.id, years, race.name);
                 setOutputPath(outputPath);
                 break;
             default:{
