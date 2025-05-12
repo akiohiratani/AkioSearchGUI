@@ -68,7 +68,7 @@ export const Home = () => {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 }}>
-                    Akio Development
+                    Akio Scraper
                 </span>
                 </div>
                 <div style={{ flex: 1, minWidth: 0, marginLeft: 32 }}>
