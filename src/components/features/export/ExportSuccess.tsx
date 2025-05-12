@@ -1,4 +1,5 @@
 import { Button } from "../common/Button";
+import { useState } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -7,25 +8,39 @@ type Props = {
 };
 
 export const ExportSuccess = ({ isOpen, onClose, outputPath}: Props) => {
+  const [copyState, setCopyState] = useState({
+    copied: false,
+    showTooltip: false
+  });
   
   if(!isOpen) return null;
-  
+
+  const copyPathToClipboard = () => {
+    // クリップボードにパスをコピー
+    navigator.clipboard.writeText(outputPath)
+      .then(() => {
+        // コピー成功
+        setCopyState({ copied: true, showTooltip: true });
+        
+        // 成功表示のトースト/ツールチップを2秒後に消す
+        setTimeout(() => {
+          setCopyState(prev => ({ ...prev, showTooltip: false }));
+        }, 2000);
+      })
+      .catch(err => {
+        console.error('クリップボードへのコピーに失敗しました:', err);
+        alert('パスのコピーに失敗しました。お手動でテキストを選択してコピーしてください。');
+      });
+  };
+
   const fileDescriptions = [
     {
-      "name":"TRAIN_dataset_race.csv",
-      "description":"選択したレースの過去5年間のレース結果データ（天候・馬場状態・出走馬情報を含む）"
+      "name":"TRAIN_dataset_race.[レース名]_分析データ.csv",
+      "description":"過去の開催データと今週の出走予定馬の基本情報が含まれます"
     },
     {
-      "name":"TRAIN_dataset_horse.csv",
-      "description":"過去3年間の出走馬の詳細戦歴（レース毎のタイム・順位・騎手情報）"
-    },
-    {
-      "name":"TEST_dataset_horse.csv",
-      "description":"今回の出走馬の直近10レースの詳細データ（調教師・馬体重の推移を含む）"
-    },
-    {
-      "name":"TEST_dataset_candidate_list.csv",
-      "description":"確定出走馬の基本情報（馬番・騎手・オッズ・馬主情報）"
+      "name":"[レース名]_出走する馬の戦歴データ.csv",
+      "description":"今週出走する各馬の過去レース成績が含まれます"
     }
   ];
 
@@ -58,17 +73,58 @@ export const ExportSuccess = ({ isOpen, onClose, outputPath}: Props) => {
               出力が正常に完了しました
             </h2>
             <p className="text-gray-600 text-sm mt-2">
-              出力先（圧縮ファイル）:
+              出力先:
             </p>
-            <div className="w-full bg-gray-100 rounded px-3 py-2 mt-1 mb-2 font-mono text-xs text-gray-800 break-all select-all">
-              {outputPath}
-            </div>
-            <p className="text-xs text-gray-500">
-              ※ 上記のパスにZIPファイルとして保存されています。エクスプローラー等でご確認ください。
+            
+            {/* クリック可能なフォルダパス */}
+            <button 
+              onClick={copyPathToClipboard}
+              className="w-full bg-gray-100 hover:bg-gray-200 rounded px-3 py-2 mt-1 mb-2 font-mono text-xs text-gray-800 break-all text-left flex items-center relative transition-colors duration-200 group"
+            >
+              <span className="flex-1">{outputPath}</span>
+              {/* コピーアイコン */}
+              <svg 
+                className="text-gray-400 group-hover:text-gray-600 ml-2 h-4 w-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth="2" 
+                  d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                />
+              </svg>
+              
+              {/* コピー成功時のツールチップ */}
+              {copyState.showTooltip && (
+                <div className="absolute right-0 -top-8 bg-gray-800 text-white text-xs rounded py-1 px-2">
+                  パスをコピーしました！
+                </div>
+              )}
+            </button>
+            
+            {/* クリック可能な説明文 */}
+            <p 
+              onClick={copyPathToClipboard}
+              className="text-xs text-gray-500 flex items-center cursor-pointer hover:text-blue-500 transition-colors duration-200"
+            >
+              ※ 上記のパスにCSVファイルとして保存されています。クリックしてパスをコピー 
             </p>
+            
+            {/* フォルダを開く方法の説明 */}
+            {copyState.copied && (
+              <div className="mt-3 text-xs bg-blue-50 text-blue-700 p-2 rounded-md">
+                <p className="font-medium mb-1">フォルダを開くには：</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>Windows</strong>：エクスプローラーを開き、アドレスバーにコピーしたパスを貼り付けて Enter キーを押してください。</li>
+                  <li><strong>Mac</strong>：Finderを開き、⌘+Shift+G キーを押してから、コピーしたパスを貼り付けて移動ボタンをクリックしてください。</li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
-
 
         {/* スクロール可能なコンテンツ */}
         <div className="flex-1 overflow-y-auto px-6 py-4">
@@ -82,7 +138,7 @@ export const ExportSuccess = ({ isOpen, onClose, outputPath}: Props) => {
                 {fileDescriptions.map((desc) => (
                   <p key={desc.name} className="text-gray-700 break-words">
                     <span className="font-medium text-blue-600">{desc.name}</span>
-                    {" - "}
+                    <br></br>
                     {desc.description}
                   </p>
                 ))}

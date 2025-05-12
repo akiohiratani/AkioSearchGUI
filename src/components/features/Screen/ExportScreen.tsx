@@ -41,7 +41,7 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
                 if(keyword.value == null) return;
 
                 // 予想時間を取得
-                setLoading({open:true, message:"セットアップ中・・・(1/2)", duration:38});
+                setLoading({open:true, message:"セットアップ中・・・(1/2)", duration:70});
                 const processingTime = await getProcessingTime(race.id, years);
 
                 // 出力実行

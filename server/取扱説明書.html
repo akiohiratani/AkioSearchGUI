@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JRAレース結果収集アプリ 取扱説明書</title>
+    <title>AkioScraper(JRAレース結果収集アプリ) 取扱説明書</title>
     <style>
         body {
             margin: 0;
@@ -14,7 +14,7 @@
             line-height: 1.7;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: #fff;
             padding: 40px;
@@ -33,12 +33,12 @@
             border-left: 4px solid #3498db;
             padding-left: 15px;
             margin: 35px 0 20px 0;
-            font-size: 1.4em;
+            font-size: 1.5em;
         }
         h3 {
             color: #2c3e50;
             margin: 0 0 15px 0;
-            font-size: 1.1em;
+            font-size: 1.2em;
         }
         section {
             margin-bottom: 40px;
@@ -90,7 +90,8 @@
             border-radius: 5px;
             font-family: 'Consolas', 'Menlo', monospace;
             color: #2e7d32;
-            font-size: 1em;
+            font-size: 0.95em;
+            line-height: 1.6;
         }
         .footer {
             margin-top: 50px;
@@ -102,6 +103,49 @@
             color: #666;
             font-size: 0.9em;
         }
+
+        .analysis-section {
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: box-shadow 0.3s ease;
+        }
+        .analysis-section:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .ai-advantage {
+            background: #e8f5e9;
+            border: 2px solid #43a047;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .highlight-box {
+            background: #fff3e0;
+            border: 1px solid #ffb300;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+
         @media (max-width: 900px) {
             .card-group { flex-direction: column; }
         }
@@ -113,16 +157,38 @@
 </head>
 <body>
 <div class="container">
-    <h1>🏇 JRAレース結果収集アプリ 取扱説明書</h1>
+    <h1>🏇 AkioScraper(レース結果収集アプリ) 取扱説明書</h1>
+
+    <section>
+        <h2>生成AI時代に必須のデータ収集ツール</h2>
+        <div class="ai-advantage">
+            <h3>⚡ ChatGPT・Claude等の生成AIで競馬予想の精度が劇的に向上</h3>
+            <p><strong>データなしのAI予想：</strong>一般的な競馬知識のみで的中率は10-15%程度</p>
+            <p><strong>豊富なデータ付きAI予想：</strong>的中率が35-40%以上に向上！</p>
+            <p>本アプリで収集したCSVファイルをアップロードするだけで、AIが高精度な予想を提供します。</p>
+        </div>
+    </section>
 
     <section>
         <h2>アプリの特徴</h2>
-        <ul>
-            <li>指定したレースの過去10年分のデータを自動収集</li>
-            <li>馬の基本情報（血統、年齢、性別など）も同時に取得</li>
-            <li>収集したデータはCSV形式で出力され、様々な分析ツールで利用可能</li>
-            <li>直感的な操作で、競馬データの専門知識がなくても簡単に使用可能</li>
-        </ul>
+        <div class="feature-list">
+            <div class="feature-item">
+                <h3>🎯 G1・重賞レース特化</h3>
+                <p>今週のメインレース（G1・重賞）に特化し、1クリックで過去分のデータを収集</p>
+            </div>
+            <div class="feature-item">
+                <h3>🤖 生成AI最適化</h3>
+                <p>ChatGPT・Claudeがそのまま読み込める形式でデータを出力</p>
+            </div>
+            <div class="feature-item">
+                <h3>📊 データ分析対応</h3>
+                <p>Excel、Python、機械学習ライブラリで即座に分析可能</p>
+            </div>
+            <div class="feature-item">
+                <h3>⚡ 超簡単操作</h3>
+                <p>レースを選んで期間を選ぶだけの2ステップ操作</p>
+            </div>
+        </div>
     </section>
 
     <section>
@@ -132,87 +198,157 @@
                 <li>ダウンロードしたファイルを解凍してください。</li>
                 <li><b>Start.exe</b>ファイルをダブルクリックして起動してください。<br>
                     <span style="color:#888;">※Google Chromeがインストールされていることを推奨します。</span><br>
-                    <span style="color:#888;">※セキュリティ警告が表示された場合は「アクセスを許可する」をクリックしてください。</span>
+                    <span style="color:#888;">※セキュリティ警告が表示された場合は「実行」または「許可」をクリックしてください。</span>
                 </li>
             </ol>
         </div>
     </section>
 
     <section>
-        <h2>データ収集手順</h2>
+        <h2>データ収集手順（たった3ステップ！）</h2>
         <div class="bg-light">
             <ol>
-                <li>アプリが起動したら「<b>レースから選択</b>」ボタンをクリックします。</li>
-                <li>表示される今週の主要レース一覧から、データを収集したいレースを選択します。</li>
-                <li>取得したい<b>年数</b>（1年〜10年）を選択します。<br>
-                    <span style="color:#888;">※選択した年数分の最新データから順に取得します。</span>
-                </li>
-                <li><b>OK</b>ボタンをクリックすると、データ収集が開始されます。</li>
-                <li>進捗ダイアログが表示され、データ収集状況を確認できます。<br>
-                    <span style="color:#888;">※データ収集中はPCの電源を切ったり、スリープ状態にしないでください。画面ロックは問題ありません。</span>
-                </li>
-                <li>処理が完了すると進捗ダイアログが閉じて、成功画面が表示されます。<br>
-                    ダイアログには、出力したCSVファイルの保存場所が記載されています。
-                </li>
+                <li>アプリ起動後、「<b>レースから選択</b>」ボタンをクリック</li>
+                <li>今週のG1・重賞レース一覧から目的のレースを選択</li>
+                <li>取得年数（1年〜15年）を選んで<b>OK</b>をクリック</li>
             </ol>
+            <p style="color:#666; margin-top:15px;">※収集には数分かかります。処理完了後、CSVファイルの保存場所が表示されます。</p>
         </div>
     </section>
 
     <section>
-        <h2>CSVファイルの使い方</h2>
+    <h2>出力されるCSVファイルについて</h2>
+    <div class="bg-light">
+        <h3>ファイル構成</h3>
+        <ul>
+            <li><b>[レース名]_分析データ.csv</b>：過去の開催データと今週の出走予定馬の基本情報が含まれます</li>
+            <li><b>[レース名]_出走する馬の戦歴データ.csv</b>：今週出走する各馬の過去レース成績が含まれます</li>
+        </ul>
+        
+        <h3>生成AI向け最適化</h3>
+        <ul>
+            <li>全てのカラム名が日本語で、AIが理解しやすい形式</li>
+            <li>文字コードはUTF-8で日本語の文字化けを防止</li>
+            <li>「データ種別」列で過去データと今週の出走馬を区別</li>
+            <li>日付形式や特殊記号も生成AIが適切に解釈できる形式</li>
+        </ul>
+    </div>
+</section>
+
+    <section>
+        <h2>生成AIで競馬予想を革新する使い方</h2>
         <div class="card-group">
             <div class="card">
-                <h3>🤖 生成AIによる競馬予想</h3>
-                <p>
-                    収集したデータを生成AI（ChatGPT、Claude等）に提供することで、高精度な予想が可能になります。
-                </p>
-                <ul>
-                    <li><b>データなしの生成AI</b>：一般的な知識のみで予想するため、的中率は低く、穴馬の予測はほぼ不可能です。</li>
-                    <li><b>10年分のデータを学習した生成AI</b>：複雑なパターンを認識し、的中率が大幅に向上します（一般予想家の25-30%に対し、35-40%以上も可能）。</li>
-                </ul>
-                <p>
-                    <b>具体的な使い方：</b><br>
-                    収集したCSVファイルをAIにアップロードし、以下のようなプロンプトを入力してください。
-                </p>
+                <h3>🤖 ChatGPT・Claude活用法</h3>
+                <p><strong>基本的な使い方：</strong></p>
+                <ol>
+                    <li>収集した2つのCSVファイルをChatGPTやClaudeにアップロード</li>
+                    <li>以下のようなプロンプトを入力</li>
+                </ol>
+                
                 <div class="prompt-box">
-                    以下のCSVファイルには過去10年分の○○レースのデータが含まれています。<br>
-                    このデータを分析して、今週の○○レースの予想をしてください。<br>
-                    特に以下の点に注目してください：<br>
-                    1. 血統と成績の相関関係<br>
-                    2. 騎手とコースの相性<br>
-                    3. 馬場状態による各馬の成績変化<br>
-                    4. 過去の類似レース展開パターン
+                    2つのCSVファイルをアップロードしました：
+                    
+                    1. 「[レース名]_分析データ.csv」には過去の開催データと今週の出走予定馬の情報が含まれています。「データ種別」列が「過去」のデータは過去の結果、「今週」は出走予定馬です。
+                    
+                    2. 「[レース名]_出走する馬の戦歴データ.csv」には今週出走する馬の過去レース成績が含まれています。
+                    
+                    これらのデータを分析して、以下を教えてください：
+                    1. 過去のレースで好成績を収めた馬の共通点
+                    2. 血統と成績の相関
+                    3. 騎手と馬場の相性
+                    4. 今週の有力馬と穴馬候補
+                    
+                    最後に、軸馬1頭と相手3〜4頭、穴馬1〜2頭を挙げて、推奨買い目も提案してください。
                 </div>
-                <p>
-                    <b>データがあることでできること：</b><br>
-                    ・複雑なパターンを認識して予想<br>
-                    ・的中率が大幅に向上<br>
-                    ・穴馬の発見も可能<br>
-                    ・大雨の中京競馬場での長距離レースなど特殊なケースにも対応<br>
-                    ・超スローペースから上がり勝負になったケースの分析も可能<br>
-                    ・人気馬が揃って敗れた波乱のレースも予測しやすくなります<br>
-                </p>
-                <p>
-                    <b>データがない場合：</b><br>
-                    AIはこうしたパターンを学習できず、「なんとなくの予想」しかできません。
-                </p>
+                
+                <p><strong>データがあることで可能になること：</strong></p>
+                <ul>
+                    <li>過去の波乱レースのパターン認識</li>
+                    <li>特定の馬場状態での好走馬の特徴分析</li>
+                    <li>人気馬が崩れやすい条件の特定</li>
+                    <li>血統×馬場×展開の複合分析</li>
+                    <li>各馬の適性と当日条件のマッチング</li>
+                </ul>
             </div>
 
             <div class="card orange">
-                <h3>📊 Excelで傾向を可視化する</h3>
-                <p>
-                    Excelで傾向を可視化する
-収集したCSVファイルをExcelに取り込むことで、NHKマイルカップに出走した馬の過去データを多角的に分析できます。特に、以下の3つの分析・可視化手法が効果的です。
+                <h3>📊 Excel・Python活用法</h3>
+                <p><strong>Excelでの基本分析例：</strong></p>
+                <ul>
+                    <li>人気順別の勝率・連対率・複勝率の自動計算</li>
+                    <li>血統別の成績集計（サンデーサイレンス系、ディープインパクト産駒など）</li>
+                    <li>枠順による有利不利の可視化</li>
+                    <li>オッズ帯別の回収率分析</li>
+                </ul>
+                
+                <p><strong>Pythonでの高度な分析例：</strong></p>
+                <div class="prompt-box">
+                    import pandas as pd
+                    import matplotlib.pyplot as plt
+                    
+                    # 分析データと戦歴データを読み込み
+                    df_race = pd.read_csv('[レース名]_分析データ.csv')
+                    df_history = pd.read_csv('[レース名]_出走する馬の戦歴データ.csv')
+                    
+                    # 過去データのみ抽出
+                    past_data = df_race[df_race['データ種別'] == '過去']
+                    
+                    # 人気順別の的中率を計算
+                    win_rate = past_data.groupby('人気')['着順'].apply(
+                        lambda x: (x.astype(str) == '1').mean()
+                    )
+                    
+                    # グラフ化
+                    plt.figure(figsize=(10, 6))
+                    plt.bar(win_rate.index, win_rate.values)
+                    plt.title('人気順別勝率')
+                    plt.xlabel('人気')
+                    plt.ylabel('勝率')
+                    plt.show()
+                </div>
+                
+                <p><strong>機械学習モデル構築例：</strong></p>
+                <ul>
+                    <li>ランダムフォレストによる着順予測</li>
+                    <li>ロジスティック回帰による勝ち馬予測</li>
+                    <li>ニューラルネットワークによる回収率最適化</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-オッズ・人気順と着順の関係をヒートマップや散布図で可視化
-オッズや人気順ごとに着順の分布をExcelのピボットテーブルや条件付き書式でヒートマップ化することで、「人気馬がどの程度信頼できるか」「穴馬が好走したパターン」などを直感的に把握できます。また、人気順と着順の散布図を作成し、トレンドラインを追加することで、予測精度や傾向を分析できます。
-
-騎手やゲート番号ごとの成績をグラフ化
-騎手別・ゲート番号別の成績（勝率・連対率・複勝率など）をピボットテーブルで集計し、棒グラフやレーダーチャートで可視化することで、「有利な枠順」や「好成績の騎手」を一目で確認できます。これにより、レース展開や戦術の予測に役立ちます。
-
-血統や前走成績と本番成績の関係を分析
-父馬や前走コース・着順などの情報をまとめ、勝ち馬や好走馬の共通点を抽出します。Excelのフィルターやクロス集計を使って「どの血統がNHKマイルカップに強いか」「前走でどのような成績を収めた馬が本番で好走するか」などを可視化できます。これにより、馬券検討の精度がさらに高まります。
-                </p>
+    <section>
+        <h2>収集できるデータ項目</h2>
+        <div class="bg-light">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div>
+                    <h3>分析データ</h3>
+                    <ul>
+                        <li>データ種別（過去/今週）</li>
+                        <li>日付・着順・枠番・馬番</li>
+                        <li>馬名・性齢・父・母父</li>
+                        <li>斤量・騎手</li>
+                        <li>タイム・着差・オッズ・人気</li>
+                        <li>ペース・上がり3F</li>
+                        <li>馬体重・開催場所・距離</li>
+                        <li>天気・馬場状態</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>戦歴データ</h3>
+                    <ul>
+                        <li>馬ID・馬名・性齢</li>
+                        <li>父・母父</li>
+                        <li>日付・開催場所・天気</li>
+                        <li>レース名・出走数</li>
+                        <li>枠番・馬番・オッズ・人気</li>
+                        <li>着順・騎手・斤量</li>
+                        <li>距離・馬場状態・タイム</li>
+                        <li>着差・ペース・馬体重</li>
+                        <li>勝ち馬・上がり3F</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -222,27 +358,30 @@
         <ul>
             <li>本アプリは個人での分析・予想目的でのみご利用ください。</li>
             <li>収集したデータの再配布や商用利用は禁止します。</li>
-            <li>JRAの公式サイトに過度な負荷をかけないよう、短時間での連続使用はお控えください。</li>
+            <li>JRAの公式サイトに過度な負荷をかけないよう、連続使用は避けてください。</li>
             <li>本アプリの不正利用、改造、リバースエンジニアリングは禁止します。</li>
             <li>本アプリの使用による予想結果の的中を保証するものではありません。</li>
             <li>競馬は公営ギャンブルです。過度な投資は控え、計画的にお楽しみください。</li>
-            <li>本アプリの利用によって生じたいかなる損害についても、開発者は責任を負いません。</li>
-            <li>悪用・違法利用が判明した場合は利用停止等の措置を取る場合があります。</li>
         </ul>
     </section>
 
     <section>
-        <h2>サポート</h2>
-        <p>
-            ご不明点やお問い合わせは、以下のメールアドレスまでご連絡ください。<br>
-            <b>support@example.com</b>（営業時間：平日10:00〜18:00）
-        </p>
+        <h2>よくある質問</h2>
+        <div class="bg-light">
+            <h3>Q: どのレースのデータを収集できますか？</h3>
+            <p>A: 今週開催されるG1・重賞レースのデータを収集できます。地方競馬や平場レースには対応していません。</p>
+            
+            <h3>Q: データ収集にはどのくらい時間がかかりますか？</h3>
+            <p>A: レースや年数により異なりますが、10年分のデータで約3〜5分程度です。15年分でも10分以内に収集できます。</p>
+            
+            <h3>Q: 生成AIにファイルをアップロードする際の注意点はありますか？</h3>
+            <p>A: 2つのファイルを同時にアップロードし、プロンプトでは各ファイルの内容を明確に説明すると、AIがより正確に分析できます。</p>
+        </div>
     </section>
 
     <footer class="footer">
         <p>
-            © 2024 JRA Data Collector<br>
-            本アプリを使って、データに基づいた賢い競馬予想をお楽しみください！
+            データ分析で競馬予想をもっと科学的に、もっと楽しく！
         </p>
     </footer>
 </div>
