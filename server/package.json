@@ -1,5 +1,5 @@
 {
-  "name": "my-app-server",
+  "name": "akio-scraper",
   "version": "1.0.0",
   "description": "Server for distributing React applications",
   "main": "app.js",
