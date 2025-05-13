@@ -83,6 +83,16 @@ export const Home = () => {
                 keyword={currentSelectedSearchType}
                 isVisible={currentScreen.export}
                 onClose={handlePrevStep}/>
+            
+            {/* Fotter */}
+            <footer className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 py-4 px-4 shadow-sm z-10">
+                <div className="max-w-7xl mx-auto flex justify-center items-center">
+                    {/* コピーライトのみ中央表示 */}
+                    <p className="text-gray-500 text-sm">
+                    &copy; 2025 Akio All Rights Reserved.
+                    </p>
+                </div>
+            </footer>
         </div>
     );
 }
