@@ -10,7 +10,7 @@ export const AlertDialog = ({ open, onClose, message }: Props) => {
   return (
     <>
       {/* オーバーレイ */}
-      <div className="fixed inset-0 bg-white/80 z-40" />
+      <div className="fixed inset-0 bg-gray-50 bg-opacity-20 flex items-center justify-center z-50" />
       {/* モーダル本体 */}
       <div className="fixed top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg w-80 p-6 pointer-events-auto">
         <div className="mb-6 text-center text-lg">{message}</div>

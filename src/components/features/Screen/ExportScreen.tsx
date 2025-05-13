@@ -7,6 +7,8 @@ import { AlertDialogStatus } from "../common/AlertDialog";
 import { ExportConfirmation } from "../export/ExportConfirmation";
 import { ExportSuccess } from "../export/ExportSuccess";
 import { ProgressDialog } from "../common/ProgressDialog";
+import { getActivate } from "../../../infrastructure/api/ActivateApiClient";
+import { ActivateError } from "../../../infrastructure/api/data/ApiError";
 
 type Props = {
     isVisible: boolean;
@@ -30,11 +32,25 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
     // API連携
     const handleSearch = async (years: number) => {
 
+        // アプリが有効かどうか
+        try{
+            await getActivate();
+        }catch (error){
+            if (error instanceof ActivateError) {
+                setAlertDialogStatus({"open": true, "message": "⚠️ 利用期限が終了しました。　　このアプリの利用期限（2024年9月30日）が終了しました。　　　最新版の詳細はココナラをご確認ください。"});
+            }else{
+                setAlertDialogStatus({"open": true, "message": "実行に失敗しました。"});
+            }
+            // 実行を中止
+            return;
+        }
+
         // 検索をダイアログの表示する
         setLoading({open:true, message:"",duration:0});
         
         let isSuccess = true;
         try {
+
             switch(keyword.type){
             case "topicRace":
                 // 検索ワードから馬を抽出
@@ -55,8 +71,8 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
             }
             }
         } catch (error) {
-            console.error('検索エラー:', error);
             isSuccess = false;
+            console.error('検索エラー:', error);
         } finally {
             // 進捗ダイアログを閉じる
             setLoading({open:false,message:"", duration:0});
