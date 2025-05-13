@@ -5,6 +5,7 @@ import { TopicRaceSelectDialog } from '../raceSelection/TopicRaceSelectDialog';
 import { SearchType } from '../common/type/SearchType';
 
 type ButtonAction = 'selectedRaceFromTopics' | 'selectedRaceDirect';
+const ALERT_MESSAGE = "「カスタマイズ指定」機能は、2025年10月1日リリース予定の秋G1シーズン対応版で提供される予定の機能です。\n【提供予定の機能】\n・特定の馬の全戦績データ収集\n・距離・開催場所による絞り込み\n・地方競馬対応\n・etc....";
 
 type Props = {
   isVisible: boolean;
@@ -16,7 +17,6 @@ type Props = {
 export const RaceSelectionScreen = ({isVisible, onExport, onClose}: Props) => {
     const [alertDialogStatus, SetAlertDialogStatus] = useState<AlertDialogStatus>({open:false, message:""});
     const [TopicRaceSelectDialogOpen, setTopicRaceSelectDialogOpen] = useState(false);
-    
     // ボタンが押下されときの挙動
     const handleButtonClick = (action: ButtonAction) =>{
         switch(action){
@@ -27,7 +27,7 @@ export const RaceSelectionScreen = ({isVisible, onExport, onClose}: Props) => {
           default:
             SetAlertDialogStatus({
                     "open" : true,
-                    "message": "現バージョンでは未対応です。"
+                    "message": ALERT_MESSAGE
                 })
             break;
         }

@@ -16,6 +16,8 @@ type Props = {
     keyword: SearchType;
 };
 
+const ALERT_MESSAGE = "⚠️ 利用期限が終了しました。\nこのアプリの利用期限（2025年9月30日）が終了しました。\n最新版の詳細は出品者のココナラをご確認ください。";
+
 export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
     const [currentScreen, setCurrentScreen] = useState({"confirmationScreen":true, "successScreen":false});
     const [loading, setLoading] = useState({open:false, message:"", duration:0.00});
@@ -37,7 +39,7 @@ export const ExportScreen = ({isVisible, onClose, keyword}: Props) => {
             await getActivate();
         }catch (error){
             if (error instanceof ActivateError) {
-                setAlertDialogStatus({"open": true, "message": "⚠️ 利用期限が終了しました。　　このアプリの利用期限（2024年9月30日）が終了しました。　　　最新版の詳細はココナラをご確認ください。"});
+                setAlertDialogStatus({"open": true, "message": ALERT_MESSAGE});
             }else{
                 setAlertDialogStatus({"open": true, "message": "実行に失敗しました。"});
             }
